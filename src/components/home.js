@@ -4,13 +4,12 @@ import Footer from "./footer";
 import Dashboard from "./dashboard";
 import {useEffect,useState} from "react";
 import {useNavigate} from 'react-router-dom';
-import { Navigate } from "react-router-dom";
 
-export default function Home({final,FindFalcone,formdata,addDataToForm,getToken,trigger}){
+export default function Home({final,FindFalcone,formdata,addDataToForm,getToken,trigger,calculateAndUpdateTime,time}){
     let [vehicledata,setvehicledata]=useState([]);
     let [planetsdata,setplanetsdata]=useState([]);
     
-    let [time,settime]=useState(0);
+    
     
     const navigate=useNavigate();
     // let handleClickFalcone=async()=>{
@@ -20,13 +19,7 @@ export default function Home({final,FindFalcone,formdata,addDataToForm,getToken,
     let navigateToResultpage=()=>{
         navigate('/result');
     }
-    let calculateAndUpdateTime=(speed,distance)=>{
 
-        let rockettime=distance/speed;
-        settime(rockettime+time);
-
-
-    }
    
     let updateData=(planetname,vehiclename)=>{
         let newplanetdata=planetsdata.filter((item)=>item.name!==planetname.name);

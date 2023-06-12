@@ -1,19 +1,17 @@
 import { Button } from "@mui/material"
 import {Stack} from "@mui/material"
 import Dropdown from "./dropdown"
-import {useNavigate} from 'react-router-dom';
 import { useEffect } from "react";
 export default function Dashboard({result,vehicledata,planetsdata,addDataToForm,updateData,time,calculateAndUpdateTime,formdata,findFalcone}){
-    const navigate=useNavigate();
    // navigate('/result',{state:{id:1}});
-    const sendData=()=>{
-        navigate('/result',{state:{id:1}});
-    }
-    const findFalconeClick=()=>{
-        findFalcone();
+    // const sendData=()=>{
+    //     navigate('/result',{state:{id:1}});
+    // // }
+    // const findFalconeClick=()=>{
+    //     findFalcone();
         
       
-    }
+    // }
     useEffect(()=>{
         console.log(result)
     },[result]);
