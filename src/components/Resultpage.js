@@ -1,14 +1,16 @@
 import Header from "./header";
 import Footer from "./footer";
-//import {useLocation} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 
-export default function Resultpage(){
+export default function Resultpage({final}){
+    
 
 
     return(
         <>
         <Header/>
-        Hello:
+        Hello:{final.status}
+        H:{final.planet_name}
 
         <Footer/>
         </>

@@ -3,30 +3,22 @@ import Header from "./header";
 import Footer from "./footer";
 import Dashboard from "./dashboard";
 import {useEffect,useState} from "react";
+import {useNavigate} from 'react-router-dom';
+import { Navigate } from "react-router-dom";
 
-export default function Home(){
+export default function Home({final,FindFalcone,formdata,addDataToForm,getToken,trigger}){
     let [vehicledata,setvehicledata]=useState([]);
     let [planetsdata,setplanetsdata]=useState([]);
-    let [formdata,setformdata]=useState({"token":"","planet_names":[],"vehicle_names":[]});
+    
     let [time,settime]=useState(0);
-    let [final,setfinal]=useState([]);
-    let result={};
+    
+    const navigate=useNavigate();
     // let handleClickFalcone=async()=>{
     //     let clickdata=await FindFalcone();
     //     console.log(clickdata);
     // }
-    let FindFalcone=async(event)=>{
-        let  falconResponse=await axios.post('https://findfalcone.geektrust.com/find',formdata,{headers:{"Accept":"application/json","Content-type":"application/json"}})
-        falconResponse=falconResponse.data;
-        debugger;
-        console.log(falconResponse);
-        setfinal(falconResponse);
-        debugger;
-        console.log(final);
-        debugger;
-        localStorage.setItem("result",JSON.stringify(falconResponse));
-        return falconResponse;
-
+    let navigateToResultpage=()=>{
+        navigate('/result');
     }
     let calculateAndUpdateTime=(speed,distance)=>{
 
@@ -35,15 +27,7 @@ export default function Home(){
 
 
     }
-    let addDataToForm=(planetname,vehiclename)=>{
-        let newformdata={...formdata};
-        newformdata.planet_names.push(planetname);
-        newformdata.vehicle_names.push(vehiclename);
-        setformdata(newformdata)
-
-        console.log(formdata);
-
-    }
+   
     let updateData=(planetname,vehiclename)=>{
         let newplanetdata=planetsdata.filter((item)=>item.name!==planetname.name);
         setplanetsdata(newplanetdata);
@@ -67,14 +51,7 @@ export default function Home(){
 
 
     }
-    let getToken=async()=>{
-        let responsetokendata=await axios.post(`https://findfalcone.geektrust.com/token`,{},{headers:{'Accept': 'application/json'}});
-        responsetokendata=responsetokendata.data;
-        let newformdata={...formdata};
-        newformdata.token=responsetokendata.token;
-        setformdata(newformdata);
-        console.log(formdata);
-    }
+    
 
     let getplanets=async()=>{
         try{
@@ -99,8 +76,24 @@ export default function Home(){
        
 
         
+
     }
+    // useEffect(()=>{
+    //     setTimeout(()=>{
+    //         // sendData();
+    //          navigate('/result');
+ 
+    //      },2000);
+       
+
+    // },[final])
     useEffect(()=>{
+        if(trigger){
+            navigateToResultpage();
+        }
+    },[trigger])
+    useEffect(()=>{
+        
         console.log(final);
     },[final])
     useEffect(()=>{
