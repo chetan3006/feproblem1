@@ -12,10 +12,10 @@ export default function Dropdown({
   id,
   addDataToForm,
   updateData,
-  calculateAndUpdateTime,buttonid
+  calculateAndUpdateTime,buttonid,formdata
 }) {
   let [showradio, setshowradio] = useState(false);
-  let [selectedplanet, setselectedplanet] = useState("");
+  let [selectedplanet, setselectedplanet] = useState(null);
   let [selectedvehicle, setselectedvehicle] = useState("");
   let [localvehicledata,setlocalvehicledata]=useState([]);
   let [localplanetsdata,setlocalplanetsdata]=useState([]);
@@ -49,23 +49,23 @@ export default function Dropdown({
          setshowradio(true);
         setselectedplanet(filteredplanetdata[0]);
     //setselectedplanet(e.target.value);
-     console.log(selectedplanet);
+    // console.log(selectedplanet);
     
   };
   let handlevehiclechange = (e) => {
     let filteredvehicledata=localvehicledata.filter((item)=>item.name===e.target.value);
         
     setselectedvehicle(filteredvehicledata[0]);
-    console.log(selectedvehicle);
+  //  console.log(selectedvehicle);
     
   };
   useEffect(()=>{
     setlocalplanetsdata(planetsdata);
-    console.log(localplanetsdata);
+    //console.log(localplanetsdata);
     setlocalvehicledata(vehicledata);
-    console.log(localvehicledata);
-    console.log(selectedplanet);
-    console.log(selectedvehicle);
+   // console.log(localvehicledata);
+  //  console.log(selectedplanet);
+   // console.log(selectedvehicle);
 
   },[planetsdata,localplanetsdata,localvehicledata,vehicledata,selectedplanet,selectedvehicle]);
   return (
@@ -74,21 +74,22 @@ export default function Dropdown({
       <Select
         displayEmpty
         defaultValue=""
-        value={selectedplanet.name}
+        value={selectedplanet?.name||''}
         onChange={handleplanetchange}
       >
         <MenuItem value="">Select</MenuItem>
-        {localplanetsdata.map((item) => {
+        {planetsdata.map((item) => {
           return (
-            <MenuItem key={item.name} value={item.name}>
+            <MenuItem  disabled={formdata.planet_names.includes(item.name)?true:false} key={item.name} value={item.name}>
               {item.name}({item.distance})
             </MenuItem>
           );
         })}
       </Select>
+      
       <Stack>
         {showradio &&
-          localvehicledata.map((item) => {
+          vehicledata.map((item) => {
          
           if(item.max_distance>=selectedplanet.distance && item.total_no>0){
               return (
@@ -104,7 +105,7 @@ export default function Dropdown({
               );
             } else {
               return (
-                <label>
+                <label key={item.name}>
                   <input
                     type="radio"
                     disabled

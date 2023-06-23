@@ -5,12 +5,12 @@ import Dashboard from "./dashboard";
 import {useEffect,useState} from "react";
 import {useNavigate} from 'react-router-dom';
 
-export default function Home({final,FindFalcone,formdata,addDataToForm,getToken,trigger,calculateAndUpdateTime,time}){
+export default function Home({final,FindFalcone,formdata,addDataToForm,getToken,trigger,calculateAndUpdateTime,time,clearFormData}){
     let [vehicledata,setvehicledata]=useState([]);
     let [planetsdata,setplanetsdata]=useState([]);
     
     
-    
+  
     const navigate=useNavigate();
     // let handleClickFalcone=async()=>{
     //     let clickdata=await FindFalcone();
@@ -22,8 +22,8 @@ export default function Home({final,FindFalcone,formdata,addDataToForm,getToken,
 
    
     let updateData=(planetname,vehiclename)=>{
-        let newplanetdata=planetsdata.filter((item)=>item.name!==planetname.name);
-        setplanetsdata(newplanetdata);
+      //  let newplanetdata=planetsdata.filter((item)=>item.name!==planetname.name);
+     //   setplanetsdata(newplanetdata);
        // console.log(newplanetdata);
         let newvehicledata=[...vehicledata];
         let newvehiclenumber=vehiclename.total_no-1;
@@ -87,7 +87,7 @@ export default function Home({final,FindFalcone,formdata,addDataToForm,getToken,
     },[trigger])
     useEffect(()=>{
         
-        console.log(final);
+       // console.log(final);
     },[final])
     useEffect(()=>{
         getToken();
@@ -98,7 +98,7 @@ export default function Home({final,FindFalcone,formdata,addDataToForm,getToken,
     },[])
     return(
         <div>
-        <Header/>
+        <Header clearFormData={clearFormData}/>
         <Dashboard result={final}  findFalcone={FindFalcone} formdata={formdata} vehicledata={vehicledata} planetsdata={planetsdata} addDataToForm={addDataToForm} updateData={updateData} time={time} calculateAndUpdateTime={calculateAndUpdateTime} />
         <Footer/>
         </div>

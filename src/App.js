@@ -7,6 +7,7 @@ import {useState} from "react";
 import axios from "axios";
 //import { SnackbarProvider, enqueueSnackbar } from 'notistack'
 function App() {
+  
   let [time,settime]=useState(0);
   const [trigger,settrigger]=useState(0);
   let [final,setfinal]=useState([]);
@@ -24,7 +25,7 @@ function App() {
     falconResponse=falconResponse.data;
     console.log(falconResponse);
     setfinal(falconResponse);
-    console.log(final);
+   // console.log(final);
     increaseTrigger();
     
     
@@ -54,6 +55,8 @@ let getToken=async()=>{
   responsetokendata=responsetokendata.data;
   let newformdata={...formdata};
   newformdata.token=responsetokendata.token;
+  newformdata.planet_names=[];
+  newformdata.vehicle_names=[];
   setformdata(newformdata);
   console.log(formdata);
 }
@@ -68,7 +71,7 @@ let calculateAndUpdateTime=(speed,distance)=>{
     <div className="App">
       <Router>
       <Routes>
-          <Route exact path="/" element={<Home time={time} calculateAndUpdateTime={calculateAndUpdateTime} trigger={trigger} final={final} FindFalcone={FindFalcone} addDataToForm={addDataToForm} getToken={getToken}/>}/>
+          <Route exact path="/" element={<Home formdata={formdata} clearFormData={clearFormData} time={time} calculateAndUpdateTime={calculateAndUpdateTime} trigger={trigger} final={final} FindFalcone={FindFalcone} addDataToForm={addDataToForm} getToken={getToken}/>}/>
           <Route exact path="/result" element={<Resultpage decreaseTrigger={decreaseTrigger} final={final} time={time} clearFormData={clearFormData} trigger={trigger}/>}/>
       </Routes>
       </Router>

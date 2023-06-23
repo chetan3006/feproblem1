@@ -19,7 +19,7 @@ export default function Resultpage({final,time,clearFormData,decreaseTrigger}){
     return(
         <>
         <Header/>
-        {final.status?<div><h1>Success Congratulations on finding Falcone King Shan is Mighty Pleased</h1>
+        {final.status==='success'?<div><h1>Success Congratulations on finding Falcone King Shan is Mighty Pleased</h1>
         <h3>Time Taken:{time}</h3>
         <h3>PlanetFound:{final.planet_name}</h3>
         </div>:<h1>Sorry Planet not Found</h1>}
