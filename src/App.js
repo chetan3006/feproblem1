@@ -34,7 +34,7 @@ function App() {
   }
   catch(e){
     changeErrorStatus();
-    enqueueSnackbar("Failed to get Falcon Response please Reset The Game",{variant:"error"})
+    enqueueSnackbar(`Failed to get Falcon Response please Reset The Game ${e.response.message}`,{variant:"error"})
   }
     
     
@@ -71,7 +71,7 @@ let getToken=async()=>{
 }
 catch(e){
   changeErrorStatus();
-    enqueueSnackbar("Failed to get Token please Reset The Game",{variant:"error"})
+    enqueueSnackbar(`Failed to get Token please Reset The Game `,{variant:"error"})
 
 }
 }
