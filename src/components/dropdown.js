@@ -31,7 +31,6 @@ export default function Dropdown({
       return true;
     }
   }
- // console.log(localvehicledata,localplanetsdata);
   let handlebutton=()=>{
     if(checkvalidation()){
     addDataToForm(selectedplanet.name,selectedvehicle.name);
@@ -48,24 +47,17 @@ export default function Dropdown({
     let filteredplanetdata=localplanetsdata.filter((item)=>item.name===e.target.value);
          setshowradio(true);
         setselectedplanet(filteredplanetdata[0]);
-    //setselectedplanet(e.target.value);
-    // console.log(selectedplanet);
     
   };
   let handlevehiclechange = (e) => {
     let filteredvehicledata=localvehicledata.filter((item)=>item.name===e.target.value);
         
     setselectedvehicle(filteredvehicledata[0]);
-  //  console.log(selectedvehicle);
     
   };
   useEffect(()=>{
     setlocalplanetsdata(planetsdata);
-    //console.log(localplanetsdata);
     setlocalvehicledata(vehicledata);
-   // console.log(localvehicledata);
-  //  console.log(selectedplanet);
-   // console.log(selectedvehicle);
 
   },[planetsdata,localplanetsdata,localvehicledata,vehicledata,selectedplanet,selectedvehicle]);
   return (

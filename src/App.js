@@ -5,13 +5,17 @@ import Resultpage from './components/Resultpage';
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom";
 import {useState} from "react";
 import axios from "axios";
-//import { SnackbarProvider, enqueueSnackbar } from 'notistack'
+import {useSnackbar} from "notistack";
 function App() {
-  
+  const {enqueueSnackbar}=useSnackbar();
+  let [error,seterror]=useState(false);
   let [time,settime]=useState(0);
   const [trigger,settrigger]=useState(0);
   let [final,setfinal]=useState([]);
   let [formdata,setformdata]=useState({"token":"","planet_names":[],"vehicle_names":[]});
+  let changeErrorStatus=()=>{
+    seterror(true);
+  }
   let increaseTrigger=()=>{
     settrigger((trigger)=>trigger+1)
 
@@ -21,16 +25,20 @@ function App() {
 
   }
   let FindFalcone=async(event)=>{
+    try{
     let  falconResponse=await axios.post('https://findfalcone.geektrust.com/find',formdata,{headers:{"Accept":"application/json","Content-type":"application/json"}})
     falconResponse=falconResponse.data;
     console.log(falconResponse);
     setfinal(falconResponse);
-   // console.log(final);
     increaseTrigger();
+  }
+  catch(e){
+    changeErrorStatus();
+    enqueueSnackbar("Failed to get Falcon Response please Reset The Game",{variant:"error"})
+  }
     
     
-    // localStorage.setItem("result",JSON.stringify(falconResponse));
-    // return falconResponse;
+
 
 }
 let clearFormData=()=>{
@@ -51,6 +59,7 @@ let addDataToForm=(planetname,vehiclename)=>{
 
 }
 let getToken=async()=>{
+  try{
   let responsetokendata=await axios.post(`https://findfalcone.geektrust.com/token`,{},{headers:{'Accept': 'application/json'}});
   responsetokendata=responsetokendata.data;
   let newformdata={...formdata};
@@ -59,6 +68,12 @@ let getToken=async()=>{
   newformdata.vehicle_names=[];
   setformdata(newformdata);
   console.log(formdata);
+}
+catch(e){
+  changeErrorStatus();
+    enqueueSnackbar("Failed to get Token please Reset The Game",{variant:"error"})
+
+}
 }
 let calculateAndUpdateTime=(speed,distance)=>{
 
@@ -71,8 +86,8 @@ let calculateAndUpdateTime=(speed,distance)=>{
     <div className="App">
       <Router>
       <Routes>
-          <Route exact path="/" element={<Home formdata={formdata} clearFormData={clearFormData} time={time} calculateAndUpdateTime={calculateAndUpdateTime} trigger={trigger} final={final} FindFalcone={FindFalcone} addDataToForm={addDataToForm} getToken={getToken}/>}/>
-          <Route exact path="/result" element={<Resultpage decreaseTrigger={decreaseTrigger} final={final} time={time} clearFormData={clearFormData} trigger={trigger}/>}/>
+          <Route exact path="/" element={<Home error={error} changeErrorStatus={changeErrorStatus} formdata={formdata} clearFormData={clearFormData} time={time} calculateAndUpdateTime={calculateAndUpdateTime} trigger={trigger} final={final} FindFalcone={FindFalcone} addDataToForm={addDataToForm} getToken={getToken}/>}/>
+          <Route exact path="/result" element={<Resultpage error={error} decreaseTrigger={decreaseTrigger} final={final} time={time} clearFormData={clearFormData} trigger={trigger}/>}/>
       </Routes>
       </Router>
       

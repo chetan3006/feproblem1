@@ -4,40 +4,32 @@ import Footer from "./footer";
 import Dashboard from "./dashboard";
 import {useEffect,useState} from "react";
 import {useNavigate} from 'react-router-dom';
+import { useSnackbar } from "notistack";
 
-export default function Home({final,FindFalcone,formdata,addDataToForm,getToken,trigger,calculateAndUpdateTime,time,clearFormData}){
+export default function Home({final,FindFalcone,formdata,addDataToForm,getToken,trigger,calculateAndUpdateTime,time,clearFormData,error,changeErrorStatus}){
     let [vehicledata,setvehicledata]=useState([]);
     let [planetsdata,setplanetsdata]=useState([]);
+    const{enqueueSnackbar}=useSnackbar();
     
     
   
     const navigate=useNavigate();
-    // let handleClickFalcone=async()=>{
-    //     let clickdata=await FindFalcone();
-    //     console.log(clickdata);
-    // }
     let navigateToResultpage=()=>{
         navigate('/result');
     }
 
    
     let updateData=(planetname,vehiclename)=>{
-      //  let newplanetdata=planetsdata.filter((item)=>item.name!==planetname.name);
-     //   setplanetsdata(newplanetdata);
-       // console.log(newplanetdata);
         let newvehicledata=[...vehicledata];
         let newvehiclenumber=vehiclename.total_no-1;
-        newvehicledata.map((item)=>{//console.log(item.name==vehiclename.name);
-           // console.log(item.total_no);
+        newvehicledata.map((item)=>{
             if(item.name===vehiclename.name){
             item.total_no=newvehiclenumber;
         }return item;});
 
 
         
-       // newvehicledata.currentvehiclename.total_no=newvehiclenumber
-      // console.log(newvehiclenumber,newvehicledata);
-       
+      
 
         
         
@@ -54,6 +46,8 @@ export default function Home({final,FindFalcone,formdata,addDataToForm,getToken,
 
         }
         catch(e){
+            changeErrorStatus();
+    enqueueSnackbar("Failed to get Planets Data please Reset The Game",{variant:"error"})
 
         }
     }
@@ -64,6 +58,8 @@ export default function Home({final,FindFalcone,formdata,addDataToForm,getToken,
         setvehicledata(responsedatavehicle);
         }
         catch(e){
+            changeErrorStatus();
+    enqueueSnackbar("Failed to get Vehicle Data please Reset The Game",{variant:"error"})
 
         }
        
@@ -71,24 +67,11 @@ export default function Home({final,FindFalcone,formdata,addDataToForm,getToken,
         
 
     }
-    // useEffect(()=>{
-    //     setTimeout(()=>{
-    //         // sendData();
-    //          navigate('/result');
- 
-    //      },2000);
-       
-
-    // },[final])
     useEffect(()=>{
         if(trigger){
             navigateToResultpage();
         }
     },[trigger])
-    useEffect(()=>{
-        
-       // console.log(final);
-    },[final])
     useEffect(()=>{
         getToken();
         getvehicles();

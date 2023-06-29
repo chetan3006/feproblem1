@@ -4,7 +4,6 @@ import {Grid} from '@mui/material';
 export default function Header({clearFormData}){
     let handlereset=()=>{
         clearFormData();
-       // navigate('/');
        window.location.reload()
 
     }

@@ -4,19 +4,7 @@ import Dropdown from "./dropdown"
 import { useEffect } from "react";
 import {Grid} from "@mui/material";
 export default function Dashboard({result,vehicledata,planetsdata,addDataToForm,updateData,time,calculateAndUpdateTime,formdata,findFalcone}){
-   // navigate('/result',{state:{id:1}});
-    // const sendData=()=>{
-    //     navigate('/result',{state:{id:1}});
-    // // }
-    // const findFalconeClick=()=>{
-    //     findFalcone();
-        
-      
-    // }
-    
-    useEffect(()=>{
-      //  console.log(result)
-    },[result]);
+
 
     
     return(
@@ -43,7 +31,6 @@ export default function Dashboard({result,vehicledata,planetsdata,addDataToForm,
             <Grid container spacing={2}>
                 <Grid item xs={12}>
             <div>
-            {/* <Button onClick={()=>findFalcone()} variant="contained" fullWidth={false}>Find Falcone</Button> */}
             <Button onClick={()=>findFalcone()} disabled={(formdata?.planet_names.length===4)?false:true} variant="contained" fullWidth={false}>Find Falcone</Button>
             </div>
             </Grid>
